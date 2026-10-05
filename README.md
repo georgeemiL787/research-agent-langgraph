@@ -88,7 +88,7 @@ Make sure Ollama is running. If the desktop app already serves `localhost:11434`
 
 ```powershell
 py -3 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -e ".[api,dev]"
+.\.venv\Scripts\python.exe -m pip install -e ".[api]"
 Copy-Item .env.example .env
 .\.venv\Scripts\python.exe -m research_agent.cli --doctor
 .\.venv\Scripts\python.exe -m uvicorn api.main:app --host 127.0.0.1 --port 8000
@@ -99,7 +99,7 @@ Copy-Item .env.example .env
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -e ".[api,dev]"
+python -m pip install -e ".[api]"
 cp .env.example .env
 python -m research_agent.cli --doctor
 python -m uvicorn api.main:app --host 127.0.0.1 --port 8000
@@ -129,7 +129,6 @@ Run these with your virtual environment activated, or use `.\.venv\Scripts\pytho
 python -m research_agent.cli --doctor
 python -m research_agent.cli "Compare LoRA and full fine-tuning using primary sources"
 python -m research_agent.cli --demo "Demonstrate the research workflow"
-python -m pytest -q
 ```
 
 The demo uses fixtures and does not require Ollama or live web access. It demonstrates the workflow, not factual research.
@@ -169,14 +168,13 @@ Model inference runs locally. Web search queries and requests to public pages le
 research_agent/       LangGraph workflow, Ollama client, search, and CLI
 api/                  FastAPI routes, background worker, and SQLite job history
 frontend/             React + Vite interface
-tests/                Deterministic workflow tests
 docs/                 Architecture notes and screenshots
 examples/             Sample offline demo report
 .env.example          Configuration template
 LICENSE               MIT license
 ```
 
-See [the architecture notes](docs/ARCHITECTURE.md) for implementation details and [validation notes](VALIDATION.md) for test scope. `requirements-lock.txt` preserves a prior environment snapshot; the setup above installs the declared project dependencies and API extras from `pyproject.toml`.
+See [the architecture notes](docs/ARCHITECTURE.md) for implementation details and [validation notes](VALIDATION.md) for historical checks. `requirements-lock.txt` preserves a prior environment snapshot; the setup above installs the declared project dependencies and API extras from `pyproject.toml`.
 
 ## Troubleshooting
 
@@ -187,7 +185,7 @@ See [the architecture notes](docs/ARCHITECTURE.md) for implementation details an
 | Research is slow | Try a smaller model, fewer rounds, or lower `NUM_CTX` |
 | Report needs review | Inspect the critique, narrow the question, or increase the available budgets |
 | No readable evidence | Try a focused question whose sources are accessible HTML pages |
-| Backend cannot import a dependency | Install `python -m pip install -e ".[api,dev]"` in the active virtual environment |
+| Backend cannot import a dependency | Install `python -m pip install -e ".[api]"` in the active virtual environment |
 
 ## License
 
